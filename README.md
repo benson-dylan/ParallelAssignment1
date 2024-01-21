@@ -1,7 +1,6 @@
 # ParallelAssignment1
 
-# To compile this program use:
-# javac AllPrimeNumbers.java
+# To compile and run this program
+javac AllPrimeNumbers.java
+java  AllPrimeNumbers
 
-#To run this program:
-# java AllPrimeNumbers

@@ -2,3 +2,4 @@
 - javac AllPrimeNumbers.java<br>
 - java  AllPrimeNumbers
 
+# Assignment Documentation

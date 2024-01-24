@@ -8,6 +8,7 @@ import java.util.concurrent.*;
 
 public class AllPrimeNumbers
 {
+    // Counter class to hand numbers to threads to process
     static class Counter
     {
         private int counter;
@@ -22,10 +23,12 @@ public class AllPrimeNumbers
         {
             this.counter = start;
         }
-
+        
+        // Returns a number to thread and increments it for the next
         public int getAndIncrement()
         {
             int temp;
+            // Lock prevents multiple threads from potentially pulling the same number
             lock.lock();
             try
             {
@@ -58,6 +61,7 @@ public class AllPrimeNumbers
             this.n = n;
         }
 
+        // Threads pull numbers and concurrently processes their numbers
         public void run()
         {
             while (counter.get() <= Math.sqrt(n))
@@ -67,6 +71,7 @@ public class AllPrimeNumbers
             }
         }
 
+        // The sieve algorithm marks off all composite numbers
         public void checkForPrime(int num)
         {
             if (sharedList.get(num))
@@ -84,15 +89,16 @@ public class AllPrimeNumbers
         Instant startTime = Instant.now();
         int n = 100000000;
         long sumOfPrimes = 0;
-        List<Integer> sharedPrimeList = Collections.synchronizedList(new ArrayList<Integer>());
         Counter counter = new Counter();
 
+        // Initiallized boolean array to true for sieve algorithm
         List<Boolean> sharedList = Collections.synchronizedList(new ArrayList<Boolean>());
         for (int i = 0; i <= n; i++)
         {
             sharedList.add(true);
         }
 
+        // Executor service spawns threads and runs them
         ExecutorService executorService = Executors.newFixedThreadPool(8);
 
         for (int i = 0; i < 8; i++)
@@ -101,8 +107,10 @@ public class AllPrimeNumbers
             executorService.execute(myThread);
         }
 
+        // Executor service shuts threads down
         executorService.shutdown();
 
+        // This ensures all threads have ended processes
         try 
         {
           executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);  
@@ -114,6 +122,7 @@ public class AllPrimeNumbers
 
         List<Integer> primes = new ArrayList<>();
 
+        // After all composite numbers have been marked off, prime numbers are filtered and summed
         for (int i = 2; i <= n; i++)
         {
             if (sharedList.get(i))

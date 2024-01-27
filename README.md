@@ -3,6 +3,8 @@
 - java  AllPrimeNumbers
 
 <h2>Assignment Documentation</h2>
+The output file execution time is measured in milliseconds.<br>
+
 I used Java's executor library to handle the spawning and completion of threads.<br>
 The main algorithm I used to calculate the primes was a modified version of the Sieve of Eratosthenes.<br>
 To balance the work load across all eight threads, I used a synchronized counter class for selecting numbers to be processed.<br>
